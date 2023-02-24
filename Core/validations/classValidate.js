@@ -2,8 +2,8 @@ const {body,param,query}=require("express-validator");
 exports.postClassArray =
     [
         
-        body("_id").isInt().withMessage("class Id should be integer"),
-        body("fullname").isString().withMessage("className should be string")
+        body("_id").optional().isInt().withMessage("class Id should be integer"),
+        body("name").isString().withMessage("className should be string")
                     .isLength({max:10}).withMessage("class name <10"),
         body('supervisor').optional().isMongoId().withMessage('Wrong supervisor ID'),
         body("children").isArray().withMessage("children must be array of number"),
@@ -14,7 +14,7 @@ exports.postClassArray =
 exports.putClassArray =
     [
         body("_id").isInt().withMessage("class Id should be integer"),
-        body("fullname").optional().isString().withMessage("className should be string")
+        body("name").optional().isString().withMessage("className should be string")
                     .isLength({max:10}).withMessage("class name <10"),
         body('supervisor').optional().optional().isMongoId().withMessage('Wrong supervisor ID'),
         body("children").optional().isArray().isNumeric().withMessage("children must be array of number"),

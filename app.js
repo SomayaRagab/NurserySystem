@@ -1,18 +1,29 @@
 const express = require("express");
 var morgan = require('morgan');
 var cors  = require('cors');
+var mongoose = require("mongoose")
 const teacherRoute=require("./Routes/teacherRoute")
 const childRoute=require("./Routes/childRoute")
 const classRoute=require("./Routes/classRoute")
 
 
 
+/**************server */
 let server = express();
 let port = process.env.PORT || 8080;
 
-server.listen(port , ()=>{
-    console.log("server is listening....")
-})
+mongoose.set('strictQuery', true);
+mongoose.connect("mongodb://127.0.0.1:27017/NurserySystem")
+        .then(()=>{
+          console.log("connect DB")
+          server.listen(port , ()=>{
+            console.log("server is listening....")
+        })
+        }).catch(error => console.log("DB problem " + error))
+
+
+/****************************/
+
 
 server.use(cors ());
 
@@ -32,9 +43,10 @@ server.use(express.urlencoded({extended:false}));
 
 //Routes  
 
-server.use(classRoute);
+
 server.use(childRoute);
 server.use(teacherRoute);
+server.use(classRoute);
 
 // not found MW
 server.use((request , response,next)=>{
@@ -43,5 +55,6 @@ server.use((request , response,next)=>{
 
 // error MW
 server.use((error,request,response,next)=>{
-    response.status(500).json({Error: error+""})
+  let status=error.status||500;
+  response.status(status).json({message:error+""});
 })
