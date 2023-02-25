@@ -14,6 +14,4 @@ router.route("/teachers")
     .delete(checkAdmin,teacherArray.deleteTeacherArray,validateMW,controller.deleteTeacher)
 
 
-
-
 module.exports=router;
