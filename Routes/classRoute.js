@@ -3,14 +3,14 @@ const router = express.Router();
 const controller=require("./../Controller/classController");
 const validateMW=require("./../Core/validations/validateMW");
 const classArray=require("../Core/validations/classValidate");
-
+const {checkAdmin}=require("./../Core/auth/authenticationMW");
 
 
 router.route("/class")
-    .get(controller.getAllClass)
-    .post(classArray.postClassArray,validateMW,controller.addClass)
-    .put(classArray.putClassArray,validateMW,controller.updateClass)
-    .delete(classArray.deleteClassArray,validateMW,controller.deleteClass)
+    .get(checkAdmin,controller.getAllClass)
+    .post(checkAdmin,classArray.postClassArray,validateMW,controller.addClass)
+    .put(checkAdmin,classArray.putClassArray,validateMW,controller.updateClass)
+    .delete(checkAdmin,classArray.deleteClassArray,validateMW,controller.deleteClass)
 
 
 

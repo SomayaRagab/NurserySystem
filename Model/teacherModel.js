@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
     fullname:{type:String,required:true},
     password:{type:String,required:true},
     email:{type:String,required:true},
-    image:String
+    image:{type:String,required:true},
 });
 
 

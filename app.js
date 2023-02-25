@@ -5,6 +5,8 @@ var mongoose = require("mongoose")
 const teacherRoute=require("./Routes/teacherRoute")
 const childRoute=require("./Routes/childRoute")
 const classRoute=require("./Routes/classRoute")
+const loginRoute = require("./Routes/loginRoute")
+const authorizationMw = require("./Core/auth/authenticationMW")
 
 
 
@@ -37,13 +39,14 @@ server.use(morgan(function (tokens, req, res) {
     ].join(' ')
   }));
 
-
+// parsing
 server.use(express.json());
-server.use(express.urlencoded({extended:false}));
+// server.use(express.urlencoded({extended:false}));
 
 //Routes  
 
-
+server.use(loginRoute);
+server.use(authorizationMw)
 server.use(childRoute);
 server.use(teacherRoute);
 server.use(classRoute);

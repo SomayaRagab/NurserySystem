@@ -1,4 +1,6 @@
+const { request } = require("express");
 const {body,param,query}=require("express-validator");
+
 exports.postTeacherArray =
     [
         
@@ -7,7 +9,6 @@ exports.postTeacherArray =
                     .isLength({max:10}).withMessage("teacher name <10"),
         body("email").isEmail().withMessage("invalid email"),
         body("password").isStrongPassword().withMessage("password must be strong"),
-        body('image').isString().withMessage('Image should be in string form ')
     ]
 
 
@@ -18,7 +19,6 @@ exports.putTeacherArray =
                     .isLength({max:10}).withMessage("teacher name <10"),
         body("email").optional().isEmail().withMessage("invalid email"),
         body("password").optional().isStrongPassword().withMessage("password must be strong"),
-        body('image').optional().isString().withMessage('Image should be in string form '),
     ]
 
 exports.deleteTeacherArray =
